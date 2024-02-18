@@ -30,6 +30,7 @@ def save_cookies(cookies, header):
     with open("cookies/cookies.json", "w") as cf:
         json.dump(cookies, cf)
     return True
+
 def clean_cookie():
     cf = json.loads(open("cookies/cookies.json", "r").read())
     if "checkpoint" in cf:
@@ -37,19 +38,22 @@ def clean_cookie():
     
     with open("cookies/cookies.json", "w") as cookie:
         json.dump(cf, cookie)
-    
     return
+
 def save_Referer(page):
     with open("cookies/Referer.txt", "w") as f:
         f.write(str(page.url))
         f.close()
     return True
+
 def find_input_fields(html):
     return bs4.BeautifulSoup(html, "html.parser", parse_only=bs4.SoupStrainer("input"))
+
 def find_url(page):
     soup = bs4.BeautifulSoup(page, "html.parser")
     url = soup.find("form").get("action")
     return (f"https://m.facebook.com:443{url}")
+
 def open_cookies():
     try:
         cf = open("cookies/cookies.json", "r").read()
@@ -57,6 +61,7 @@ def open_cookies():
     except IOError:
         cookies = {"fr":"0NFggJSEGI3pYX23U..BjKftf.wx.AAA.0.0.BjKftf.AWUytHdS_8E", "m_pixel_ratio":"3","locale":"en_US"}
     return cookies
+
 def open_headers():
     try:
       header = {'User-Agent': 'Mozilla/5.0 (Mobile; rv:48.0; A405DL) Gecko/48.0 Firefox/48.0 KAIOS/2.5'}
@@ -64,6 +69,7 @@ def open_headers():
     except IOError:
         header={'User-Agent': 'Mozilla/5.0 (Mobile; rv:48.0; A405DL) Gecko/48.0 Firefox/48.0 KAIOS/2.5'}
     return header
+
 def browser(url, data=None, redirect=True):
     # cookies
     cookies = open_cookies()
@@ -81,6 +87,7 @@ def browser(url, data=None, redirect=True):
     #function
     if save_cookies(cookies, page) and save_Referer(page):
         return page
+    
 def create_form():
     URL = 'https://m.facebook.com'
     page = browser(URL)
